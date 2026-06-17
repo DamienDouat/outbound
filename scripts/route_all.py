@@ -66,12 +66,16 @@ def main():
 
     rows = c.query_all(CFG["notion"]["contacts_db"], tok)
 
+    # multi-thread ABM : verrou par (enseigne, persona) -> 1 décideur PAR ANGLE
+    # (plusieurs personas possibles sur un même compte, messages distincts).
     taken = set()
     for p in rows:
-        canal = (p["properties"].get(c.col("canal_status"), {}).get("select") or {}).get("name")
+        pr = p["properties"]
+        canal = (pr.get(c.col("canal_status"), {}).get("select") or {}).get("name")
         if canal == in_seq:
-            for r in p["properties"].get(c.col("companies_relation"), {}).get("relation", []):
-                taken.add(r["id"])
+            per0 = c.famille_to_persona((pr.get(c.col("famille"), {}).get("select") or {}).get("name") or "")
+            for r in pr.get(c.col("companies_relation"), {}).get("relation", []):
+                taken.add((r["id"], per0))
 
     best = {}
     stats = {"no_prospect": 0, "no_linkedin": 0, "already_taken": 0, "candidates": 0}
@@ -82,9 +86,6 @@ def main():
             stats["no_prospect"] += 1
             continue
         cid = rels[0]
-        if cid in taken:
-            stats["already_taken"] += 1
-            continue
         liurl = li(pr)
         if not liurl:
             stats["no_linkedin"] += 1
@@ -96,6 +97,9 @@ def main():
         per = c.famille_to_persona(fam)
         if per not in PERSONA_RANK:
             per = CFG["persona_priority"][-1]
+        if (cid, per) in taken:
+            stats["already_taken"] += 1
+            continue
         name = c.title_text(pr.get(c.col("contact_title"), {}))
         first = name.split()[0] if name else ""
         last = " ".join(name.split()[1:]) if len(name.split()) > 1 else ""
@@ -115,9 +119,10 @@ def main():
             lead["variables"] = {"icebreaker": ice[pid]}
         else:
             lead["variables"] = {}
-        cur = best.get(cid)
+        key = (cid, per)
+        cur = best.get(key)
         if cur is None or lead["rank"] < cur["rank"]:
-            best[cid] = lead
+            best[key] = lead
         stats["candidates"] += 1
 
     out = {}
