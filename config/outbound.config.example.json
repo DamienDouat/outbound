@@ -1,0 +1,50 @@
+{
+  "_comment": "Copie ce fichier en config/outbound.config.json et remplis tes valeurs. Le .json réel est gitignored. Tout le moteur lit cette config : zéro valeur en dur.",
+
+  "notion": {
+    "token_env": "NOTION_TOKEN",
+    "companies_db": "REMPLIR-uuid-base-companies",
+    "contacts_db": "REMPLIR-uuid-base-contacts",
+    "columns": {
+      "company_title": "Corporations",
+      "company_status": "Statut",
+      "prospect_value": "Prospect",
+      "contact_title": "Contacts",
+      "famille": "Famille",
+      "arc_status": "Arc statut",
+      "arc_validated_value": "Validé",
+      "canal_status": "Canal status",
+      "canal_in_sequence_value": "En séquence",
+      "linkedin": "LinkedIn URL",
+      "email": "Email",
+      "note": "Note contextuelle",
+      "companies_relation": "Companies"
+    }
+  },
+
+  "personas": ["DG", "Metier", "DSI"],
+  "persona_priority": ["DG", "Metier", "DSI"],
+  "famille_to_persona": {
+    "DG": "DG", "Finance": "DG",
+    "DSI": "DSI",
+    "Metier": "Metier", "Métier": "Metier", "Digital": "Metier",
+    "Achats": "Metier", "Marketing": "Metier", "Autre": "Metier"
+  },
+
+  "tiers": ["warm", "ice", "std"],
+  "campaigns": {
+    "warm": { "DG": "cam_REMPLIR", "DSI": "cam_REMPLIR", "Metier": "cam_REMPLIR" },
+    "ice":  { "DG": "cam_REMPLIR", "DSI": "cam_REMPLIR", "Metier": "cam_REMPLIR" },
+    "std":  { "DG": "cam_REMPLIR", "DSI": "cam_REMPLIR", "Metier": "cam_REMPLIR" }
+  },
+
+  "arc_dataset": "data/arcs.json",
+  "icebreaker_files": ["data/icebreakers.json"],
+
+  "branding": {
+    "company": "YourCo",
+    "site": "yourco.example",
+    "value_prop": "ce que vous faites, en une phrase",
+    "signature": "Prénom Nom"
+  }
+}

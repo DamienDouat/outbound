@@ -1,0 +1,11 @@
+# secrets & config réelle (jamais committer)
+.env
+config/outbound.config.json
+
+# données CRM / runtime (jamais committer)
+data/*.json
+data/route/
+
+# python
+__pycache__/
+*.pyc
