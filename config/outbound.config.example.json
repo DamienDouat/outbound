@@ -30,6 +30,11 @@
     "Metier": "Metier", "Métier": "Metier", "Digital": "Metier",
     "Achats": "Metier", "Marketing": "Metier", "Autre": "Metier"
   },
+  "persona_angles": {
+    "DG": "bénéfice business d'abord (le résultat sur le P&L)",
+    "Metier": "le quotidien du métier, les arbitrages concrets",
+    "DSI": "intégration légère sur le SI existant, sans chantier lourd"
+  },
 
   "tiers": ["warm", "ice", "std"],
   "campaigns": {
@@ -45,6 +50,19 @@
     "company": "YourCo",
     "site": "yourco.example",
     "value_prop": "ce que vous faites, en une phrase",
-    "signature": "Prénom Nom"
+    "claim": "le résultat chiffré que vous visez (objectif, jamais un résultat client présenté comme acquis)",
+    "signature": "Prénom Nom",
+    "founder_background": "une phrase de légitimité (ex. ex-praticien du secteur)"
+  },
+
+  "sourcing": {
+    "provider": "france_insee",
+    "country": "FR",
+    "naf_codes": ["47.71Z"],
+    "departments": [],
+    "employee_tranches_min": "21",
+    "employee_tranches_max": "42",
+    "page_limit": 5,
+    "_doc": "france_insee = API recherche-entreprises.api.gouv.fr (gratuit, sans clé, FR uniquement). naf_codes = activités cibles. tranches effectif INSEE (21=50-99 ... 42=1000-1999). Voir docs/sourcing.md pour brancher un autre provider."
   }
 }

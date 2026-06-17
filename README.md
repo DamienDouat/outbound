@@ -74,11 +74,29 @@ t1_subject, t1_body, t2_body}) ; tu les génères avec ton propre process de ré
 - **LinkedIn-only** par défaut (canal propre ; l'email se branche quand tu veux).
 - **Aucun envoi automatique** : le moteur prépare, l'humain lance.
 
+## Sourcing (optionnel)
+
+Un adaptateur **France (INSEE)** est fourni pour trouver tes sociétés cibles (gratuit, sans clé) :
+
+```bash
+python3 scripts/sourcing/source_companies_fr.py          # dry -> data/companies_candidates.json
+python3 scripts/sourcing/source_companies_fr.py --push   # crée les Companies (Prospect) dans Notion
+```
+
+Config dans `config.sourcing` (codes NAF, départements, tranches d'effectif). Pour un autre
+pays/source : écris un adaptateur qui produit le même fichier candidats. Voir `docs/sourcing.md`.
+
+## Copy & voix
+
+Le copy des 3 tiers vit dans `templates/` (paramétré par `config.branding` + `config.persona_angles`).
+Les prompts de génération (icebreaker, arc) sont des **artefacts inline** réutilisables :
+`templates/icebreaker-prompt.md`, `templates/arc-prompt.md`. Voir `docs/copy.md`.
+
 ## Statut
 
-MVP = le **moteur de campagnes 3 tiers** (route + icebreaker). Le **sourcing** (découverte +
-enrichissement des contacts) et la génération de **copy/voix** sont une phase suivante :
-ce repo suppose que tes contacts sont déjà dans Notion.
+Inclus : **moteur de campagnes 3 tiers** (route + icebreaker) + **sourcing France** + **templates
+copy/voix**. À venir : découverte/enrichissement des **décideurs** (dépend d'outils tiers, côté
+agent gaté), adaptateurs sourcing hors France.
 
 ## Licence
 
